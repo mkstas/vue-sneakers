@@ -1,0 +1,19 @@
+<script setup lang="ts">
+import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
+</script>
+
+<template>
+  <div class="text-center">
+    <img src="/icons/package.png" alt="Пустая корзина" class="w-28 mx-auto" />
+    <p class="mt-4 text-xl font-bold">Корзина пустая</p>
+    <p class="mt-2 text-balance text-neutral-500">
+      Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ
+    </p>
+    <button
+      class="w-full max-w-60 mx-auto mt-10 p-4 flex items-center justify-center gap-6 bg-green-600 text-white rounded-xl group"
+    >
+      <ArrowLeftIcon class="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+      <span>Вернуться назад</span>
+    </button>
+  </div>
+</template>
