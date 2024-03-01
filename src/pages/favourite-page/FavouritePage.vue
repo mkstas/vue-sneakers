@@ -2,6 +2,7 @@
 import { RouterLink } from 'vue-router';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 import { ProductCard } from '@/widgets/product-card';
+import { ProductCardSkeleton } from '@/widgets/product-card-skeleton';
 import { FavouriteEmpty } from './favourite-empty';
 </script>
 
@@ -18,6 +19,7 @@ import { FavouriteEmpty } from './favourite-empty';
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-10">
       <ProductCard :is-favourite="true" :is-added="false" />
       <ProductCard :is-favourite="true" :is-added="false" />
+      <!-- <ProductCardSkeleton v-for="(_, index) in Array(4).fill(1)" :key="index" /> -->
     </div>
     <!-- <FavouriteEmpty /> -->
   </section>

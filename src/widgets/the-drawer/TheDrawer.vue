@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 import { VOverlay, VSheet } from '@/shared/ui';
 import { CreateOrder } from '@/features/create-order';
 import { DrawerProductCard } from './drawer-product-card';
+import { DrawerProductCardSkeleton } from './drawer-product-card-skeleton';
 import { DrawerEmpty } from './drawer-empty';
 import { DrawerSuccessOrder } from './drawer-success-order';
 </script>
@@ -21,6 +22,7 @@ import { DrawerSuccessOrder } from './drawer-success-order';
           <DrawerProductCard />
           <DrawerProductCard />
           <DrawerProductCard />
+          <!-- <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" /> -->
         </div>
         <CreateOrder />
         <!-- <div class="h-full flex items-center justify-center">
