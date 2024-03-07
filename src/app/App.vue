@@ -10,7 +10,7 @@ import { TheDrawer } from '@/widgets/the-drawer';
     <TheHeader />
     <main class="p-2 sm:p-6 lg:p-10">
       <RouterView />
-      <!-- <TheDrawer /> -->
+      <TheDrawer />
     </main>
   </VSheet>
 </template>

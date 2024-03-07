@@ -1,21 +1,21 @@
-import { computed } from 'vue';
+import { IProduct } from '@/shared/types';
+import { useFavouriteStore } from '@/entities/favourite';
 
 export interface IProps {
+  product: IProduct;
   isFavourite: boolean;
 }
 
-export const useClasses = (isActive: boolean) => {
-  const buttonClasses = computed(() => [
-    'p-2 rounded-xl border',
-    isActive ? 'bg-red-200 border-red-200' : 'border-neutral-200 group',
-  ]);
+export const useAddToFavourite = () => {
+  const favouriteStore = useFavouriteStore();
 
-  const iconClasses = computed(() => [
-    'w-5 h-5 text-neutral-400',
-    isActive
-      ? 'fill-red-400 stroke-red-400'
-      : 'group-hover:fill-red-400 group-hover:stroke-red-400',
-  ]);
+  const storeFavourite = async (product: IProduct) => {
+    await favouriteStore.store(product);
+  };
 
-  return { buttonClasses, iconClasses };
+  const removeFavorite = async (productId: number) => {
+    await favouriteStore.remove(productId);
+  };
+
+  return { storeFavourite, removeFavorite };
 };

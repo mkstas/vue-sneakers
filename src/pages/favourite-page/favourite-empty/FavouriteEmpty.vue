@@ -7,7 +7,7 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
   <div class="flex items-center justify-center">
     <div class="w-full max-w-72 text-center">
       <img src="/icons/emoji-1.png" alt="" class="w-20 mx-auto" />
-      <p class="mt-4 text-xl font-bold">Закладок нет :(</p>
+      <p class="mt-4 text-xl font-bold">Избранного нет :(</p>
       <p class="mt-2 text-balance text-neutral-500">Вы ничего не добавляли в закладки</p>
       <RouterLink
         to="/"

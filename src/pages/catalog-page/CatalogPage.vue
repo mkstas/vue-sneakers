@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { SearchField } from '@/features/search-field';
 import { ProductCard } from '@/widgets/product-card';
 import { ProductCardSkeleton } from '@/widgets/product-card-skeleton';
+import { useCatalog } from './CatalogPage.data';
+
+const { isLoading, productStore, fetchProducts } = useCatalog();
+
+onMounted(async () => await fetchProducts());
 </script>
 
 <template>
@@ -11,11 +17,16 @@ import { ProductCardSkeleton } from '@/widgets/product-card-skeleton';
       <SearchField />
     </header>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-10">
-      <ProductCard :is-favourite="true" :is-added="true" />
-      <ProductCard :is-favourite="true" :is-added="false" />
-      <ProductCard :is-favourite="false" :is-added="true" />
-      <ProductCard :is-favourite="false" :is-added="false" />
-      <!-- <ProductCardSkeleton v-for="(_, index) in Array(4).fill(1)" :key="index" /> -->
+      <template v-if="!isLoading">
+        <ProductCard
+          v-for="product in productStore.products"
+          :key="product.id"
+          :product="product"
+        />
+      </template>
+      <template v-if="isLoading">
+        <ProductCardSkeleton v-for="(_, index) in Array(4).fill(1)" :key="index" />
+      </template>
     </div>
   </section>
 </template>
