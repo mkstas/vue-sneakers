@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { IProduct } from '@/entities/product';
 import { RemoveFromCart } from '@/features/remove-from-cart';
-import { IProps } from './DrawerProductCard.data';
 
-defineProps<IProps>();
+defineProps<{ product: IProduct }>();
 </script>
 
 <template>
