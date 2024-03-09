@@ -1,23 +1,12 @@
-import { Ref, ref } from 'vue';
 import { useCartStore } from '@/entities/product';
+import { computed } from 'vue';
 
 export const useDrawer = () => {
-  const isLoading: Ref<boolean> = ref(false);
-
   const cartStore = useCartStore();
 
-  const fetchData = async () => {
-    if (cartStore.products.length <= 0) {
-      try {
-        isLoading.value = true;
-        await cartStore.show();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        isLoading.value = false;
-      }
-    }
-  };
+  const fullPrice = computed(() =>
+    cartStore.products.reduce((price, currentProduct) => price + currentProduct.price, 0),
+  );
 
-  return { isLoading, cartStore, fetchData };
+  return { cartStore, fullPrice };
 };

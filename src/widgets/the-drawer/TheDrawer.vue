@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 import { VOverlay, VSheet } from '@/shared/ui';
 import { CreateOrder } from '@/features/create-order';
 import { DrawerEmpty } from './drawer-empty';
 import { DrawerProductCard } from './drawer-product-card';
-import { DrawerProductCardSkeleton } from './drawer-product-card-skeleton';
 import { DrawerSuccessOrder } from './drawer-success-order';
 import { useDrawer } from './TheDrawer.data';
 
-const { isLoading, cartStore, fetchData } = useDrawer();
+const { cartStore, fullPrice } = useDrawer();
 
 const emit = defineEmits(['close-drawer']);
-
-onMounted(async () => await fetchData());
 </script>
 
 <template>
@@ -26,21 +22,20 @@ onMounted(async () => await fetchData());
           </button>
           <h2 class="text-2xl font-bold">Корзина</h2>
         </header>
-        <template v-if="cartStore.products.length > 0 || isLoading">
+        <template v-if="cartStore.products.length > 0">
           <div class="flex-1 space-y-4 overflow-y-auto">
-            <template v-if="!isLoading">
-              <DrawerProductCard v-for="product in cartStore.products" :product="product" />
-            </template>
-            <template v-else>
-              <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" />
-            </template>
+            <DrawerProductCard v-for="product in cartStore.products" :product="product" />
           </div>
-          <CreateOrder />
+          <div class="space-y-6">
+            <div class="flex justify-between gap-2">
+              <p>Итого:</p>
+              <div class="h-5 flex-1 border-b-2 border-dotted border-neutral-200"></div>
+              <p class="font-bold">{{ fullPrice }} руб.</p>
+            </div>
+            <CreateOrder />
+          </div>
         </template>
-        <div
-          v-if="cartStore.products.length <= 0 && !isLoading"
-          class="h-full flex items-center justify-center"
-        >
+        <div v-else class="h-full flex items-center justify-center">
           <DrawerEmpty v-if="!cartStore.isOrdered" />
           <DrawerSuccessOrder v-else />
         </div>
