@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { watch } from 'vue';
+import debounce from 'lodash.debounce';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
 import { useSearchField } from './SearchField.data';
 
 const { searchValue, fetchSearchData } = useSearchField();
 
-watch(searchValue, async () => await fetchSearchData());
+watch(
+  searchValue,
+  debounce(async () => await fetchSearchData(), 400),
+);
 </script>
 
 <template>
