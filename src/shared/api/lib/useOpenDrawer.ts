@@ -1,6 +1,6 @@
 import { Ref, ref } from 'vue';
 
-export const useDrawer = () => {
+export const useOpenDrawer = () => {
   const isOpenDrawer: Ref<boolean> = ref(false);
 
   const openDrawer = () => {

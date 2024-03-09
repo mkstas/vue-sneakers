@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { useCartStore } from '@/entities/cart';
+import { useCartStore } from '@/entities/product';
 
 defineProps<{ productId: number }>();
 

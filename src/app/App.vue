@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { VSheet } from '@/shared/ui';
-import { useDrawer } from '@/shared/utils';
+import { useOpenDrawer } from '@/shared/api';
 import { TheHeader } from '@/widgets/the-header';
 import { TheDrawer } from '@/widgets/the-drawer';
 
-const { isOpenDrawer, openDrawer, closeDrawer } = useDrawer();
+const { isOpenDrawer, openDrawer, closeDrawer } = useOpenDrawer();
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const { isOpenDrawer, openDrawer, closeDrawer } = useDrawer();
     <TheHeader @open-drawer="openDrawer" />
     <main class="p-2 sm:p-6 lg:p-10">
       <RouterView />
-      <TheDrawer v-show="isOpenDrawer" @close-drawer="closeDrawer" />
+      <TheDrawer v-if="isOpenDrawer" @close-drawer="closeDrawer" />
     </main>
   </VSheet>
 </template>

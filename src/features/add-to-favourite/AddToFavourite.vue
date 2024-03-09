@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { HeartIcon } from '@heroicons/vue/24/outline';
-import { useFavouriteStore } from '@/entities/favourite';
-import { IProps } from './AddToFavourite.data';
+import { IProduct, useFavouriteStore } from '@/entities/product';
 
-const props = defineProps<IProps>();
+const props = defineProps<{ product: IProduct; isFavourite: boolean }>();
 
 const buttonClasses = computed(() => [
   'p-2 rounded-xl border',
@@ -21,11 +20,15 @@ const iconClasses = computed(() => [
 const favouriteStore = useFavouriteStore();
 
 const onClick = () => {
-  if (props.isFavourite) {
-    return favouriteStore.remove(props.product.id);
-  }
+  try {
+    if (props.isFavourite) {
+      return favouriteStore.remove(props.product.id);
+    }
 
-  favouriteStore.store(props.product);
+    return favouriteStore.store(props.product);
+  } catch (error) {
+    console.log(error);
+  }
 };
 </script>
 

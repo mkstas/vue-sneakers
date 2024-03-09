@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 import { VOverlay, VSheet } from '@/shared/ui';
-import { useCartStore } from '@/entities/cart';
 import { CreateOrder } from '@/features/create-order';
+import { DrawerEmpty } from './drawer-empty';
 import { DrawerProductCard } from './drawer-product-card';
 import { DrawerProductCardSkeleton } from './drawer-product-card-skeleton';
-import { DrawerEmpty } from './drawer-empty';
 import { DrawerSuccessOrder } from './drawer-success-order';
+import { useDrawer } from './TheDrawer.data';
 
-const cartStore = useCartStore();
+const { isLoading, cartStore, fetchData } = useDrawer();
 
 const emit = defineEmits(['close-drawer']);
+
+onMounted(async () => await fetchData());
 </script>
 
 <template>
@@ -23,15 +26,24 @@ const emit = defineEmits(['close-drawer']);
           </button>
           <h2 class="text-2xl font-bold">Корзина</h2>
         </header>
-        <div class="flex-1 space-y-4 overflow-y-auto">
-          <DrawerProductCard v-for="product in cartStore.cart" :product="product" />
-          <!-- <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" /> -->
+        <template v-if="cartStore.products.length > 0 || isLoading">
+          <div class="flex-1 space-y-4 overflow-y-auto">
+            <template v-if="isLoading">
+              <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" />
+            </template>
+            <template v-else>
+              <DrawerProductCard v-for="product in cartStore.products" :product="product" />
+            </template>
+          </div>
+          <CreateOrder />
+        </template>
+        <div
+          v-if="cartStore.products.length <= 0 && !isLoading"
+          class="h-full flex items-center justify-center"
+        >
+          <DrawerEmpty v-if="true" />
+          <DrawerSuccessOrder v-else />
         </div>
-        <CreateOrder />
-        <!-- <div class="h-full flex items-center justify-center">
-          <DrawerEmpty />
-          <DrawerSuccessOrder />
-        </div> -->
       </section>
     </VSheet>
   </VOverlay>

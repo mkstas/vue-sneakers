@@ -7,9 +7,9 @@ import { ProductCardSkeleton } from '@/widgets/product-card-skeleton';
 import { FavouriteEmpty } from './favourite-empty';
 import { useFavouritePage } from './FavouritePage.data';
 
-const { isLoading, favouriteStore, fetchFavourites } = useFavouritePage();
+const { isLoading, favouriteStore, fetchData } = useFavouritePage();
 
-onMounted(async () => await fetchFavourites());
+onMounted(async () => await fetchData());
 </script>
 
 <template>
@@ -21,11 +21,11 @@ onMounted(async () => await fetchFavourites());
       <h1 class="text-2xl md:text-3xl font-bold">Избранное</h1>
     </header>
     <div
-      v-if="favouriteStore.favourites.length > 0"
+      v-if="favouriteStore.products.length > 0"
       class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-10"
     >
       <template v-if="!isLoading">
-        <ProductCard v-for="product in favouriteStore.favourites" :product="product" />
+        <ProductCard v-for="product in favouriteStore.products" :product="product" />
       </template>
       <template v-if="isLoading">
         <ProductCardSkeleton v-for="(_, index) in Array(4).fill(1)" :key="index" />

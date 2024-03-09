@@ -1,25 +1,23 @@
 import { Ref, ref } from 'vue';
-import { useCartStore, useFavouriteStore } from '@/entities/product';
+import { useCartStore } from '@/entities/product';
 
-export const useFavouritePage = () => {
+export const useDrawer = () => {
   const isLoading: Ref<boolean> = ref(false);
 
-  const favouriteStore = useFavouriteStore();
   const cartStore = useCartStore();
 
   const fetchData = async () => {
-    if (favouriteStore.products.length <= 0) {
+    if (cartStore.products.length <= 0) {
       try {
         isLoading.value = true;
-        await favouriteStore.show();
         await cartStore.show();
       } catch (error) {
-        console.error(error);
+        console.log(error);
       } finally {
         isLoading.value = false;
       }
     }
   };
 
-  return { isLoading, favouriteStore, fetchData };
+  return { isLoading, cartStore, fetchData };
 };

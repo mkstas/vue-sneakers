@@ -1,20 +1,18 @@
 import { Ref, ref } from 'vue';
-import { useProductStore } from '@/entities/product';
-import { useFavouriteStore } from '@/entities/favourite';
-import { useCartStore } from '@/entities/cart';
+import { useCartStore, useCatalogStore, useFavouriteStore } from '@/entities/product';
 
 export const useCatalog = () => {
   const isLoading: Ref<boolean> = ref(false);
 
-  const productStore = useProductStore();
+  const catalogStore = useCatalogStore();
   const favouriteStore = useFavouriteStore();
   const cartStore = useCartStore();
 
-  const fetchProducts = async () => {
-    if (productStore.products.length <= 0) {
+  const fetchData = async () => {
+    if (catalogStore.products.length <= 0) {
       try {
         isLoading.value = true;
-        await productStore.show();
+        await catalogStore.show();
         await favouriteStore.show();
         await cartStore.show();
       } catch (error) {
@@ -25,5 +23,5 @@ export const useCatalog = () => {
     }
   };
 
-  return { isLoading, productStore, favouriteStore, fetchProducts };
+  return { isLoading, catalogStore, fetchData };
 };

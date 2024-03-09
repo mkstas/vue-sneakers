@@ -5,7 +5,7 @@ import { useSearchField } from './SearchField.data';
 
 const { searchValue, fetchSearchData } = useSearchField();
 
-watch(searchValue, fetchSearchData);
+watch(searchValue, async () => await fetchSearchData());
 </script>
 
 <template>
@@ -19,4 +19,3 @@ watch(searchValue, fetchSearchData);
     />
   </div>
 </template>
-./SearchField.data

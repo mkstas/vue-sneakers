@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useFavouriteStore } from '@/entities/favourite';
-import { useCartStore } from '@/entities/cart';
+import { IProduct, useCartStore, useFavouriteStore } from '@/entities/product';
 import { AddToFavourite } from '@/features/add-to-favourite';
 import { AddToCart } from '@/features/add-to-cart';
-import { IProps } from './ProductCard.data';
 
-const props = defineProps<IProps>();
+const props = defineProps<{ product: IProduct }>();
 
 const favouriteStore = useFavouriteStore();
 const cartStore = useCartStore();
 
 const isFavourite = computed(
-  () => !!favouriteStore.favourites.find(favourite => favourite.id === props.product.id),
+  () => !!favouriteStore.products.find(product => product.id === props.product.id),
 );
 
-const isAdded = computed(() => !!cartStore.cart.find(product => product.id === props.product.id));
+const isAdded = computed(
+  () => !!cartStore.products.find(product => product.id === props.product.id),
+);
 </script>
 
 <template>

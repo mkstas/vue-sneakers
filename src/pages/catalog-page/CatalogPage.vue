@@ -5,9 +5,9 @@ import { ProductCard } from '@/widgets/product-card';
 import { ProductCardSkeleton } from '@/widgets/product-card-skeleton';
 import { useCatalog } from './CatalogPage.data';
 
-const { isLoading, productStore, fetchProducts } = useCatalog();
+const { isLoading, catalogStore, fetchData } = useCatalog();
 
-onMounted(async () => await fetchProducts());
+onMounted(async () => await fetchData());
 </script>
 
 <template>
@@ -19,13 +19,13 @@ onMounted(async () => await fetchProducts());
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-10">
       <template v-if="!isLoading">
         <ProductCard
-          v-for="product in productStore.products"
+          v-for="product in catalogStore.products"
           :key="product.id"
           :product="product"
         />
       </template>
       <template v-if="isLoading">
-        <ProductCardSkeleton v-for="(_, index) in Array(4).fill(1)" :key="index" />
+        <ProductCardSkeleton v-for="(_, index) in Array(8).fill(1)" :key="index" />
       </template>
     </div>
   </section>

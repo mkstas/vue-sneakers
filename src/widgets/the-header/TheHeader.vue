@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { ShoppingCartIcon, HeartIcon } from '@heroicons/vue/24/outline';
+import { useHeader } from './TheHeader.data';
 
 const emit = defineEmits(['open-drawer']);
+
+const { fullPrice } = useHeader();
 </script>
 
 <template>
@@ -21,7 +24,7 @@ const emit = defineEmits(['open-drawer']);
           class="p-2 flex items-center gap-2 text-neutral-500 hover:text-green-600"
         >
           <ShoppingCartIcon class="w-6 h-6" />
-          <span class="font-medium">1205 руб.</span>
+          <span class="font-medium">{{ fullPrice }} руб.</span>
         </button>
       </li>
       <li>

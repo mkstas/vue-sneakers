@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { CheckIcon, PlusIcon } from '@heroicons/vue/24/outline';
-import { useCartStore } from '@/entities/cart';
-import { IProps } from './AddToCart.data';
+import { IProduct, useCartStore } from '@/entities/product';
 
-const props = defineProps<IProps>();
+const props = defineProps<{ product: IProduct; isAdded: boolean }>();
 
 const buttonClasses = computed(() => [
   'p-2 rounded-xl border',

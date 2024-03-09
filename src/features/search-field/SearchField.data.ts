@@ -1,14 +1,14 @@
 import { Ref, ref } from 'vue';
-import { useProductStore } from '@/entities/product';
+import { useCatalogStore } from '@/entities/product';
 
 export const useSearchField = () => {
   const searchValue: Ref<string> = ref('');
 
-  const productStore = useProductStore();
+  const catalogStore = useCatalogStore();
 
   const fetchSearchData = async () => {
     try {
-      await productStore.searchByName(searchValue.value);
+      await catalogStore.searchByTitle(searchValue.value);
     } catch (error) {
       console.log(error);
     }
