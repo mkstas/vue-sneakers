@@ -4,9 +4,3 @@ export interface IProduct {
   imageUrl: string;
   price: number;
 }
-
-// export interface IProductInstance {
-//   product: IProduct;
-//   isFavourite: boolean;
-//   isAdded: boolean;
-// }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { ShoppingCartIcon, HeartIcon } from '@heroicons/vue/24/outline';
+
+const emit = defineEmits(['open-drawer']);
 </script>
 
 <template>
@@ -14,7 +16,10 @@ import { ShoppingCartIcon, HeartIcon } from '@heroicons/vue/24/outline';
     </RouterLink>
     <ul class="-mr-2 flex items-center gap-4">
       <li>
-        <button class="p-2 flex items-center gap-2 text-neutral-500 hover:text-green-600">
+        <button
+          @click="emit('open-drawer')"
+          class="p-2 flex items-center gap-2 text-neutral-500 hover:text-green-600"
+        >
           <ShoppingCartIcon class="w-6 h-6" />
           <span class="font-medium">1205 руб.</span>
         </button>
