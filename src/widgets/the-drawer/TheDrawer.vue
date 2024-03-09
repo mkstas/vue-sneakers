@@ -28,11 +28,11 @@ onMounted(async () => await fetchData());
         </header>
         <template v-if="cartStore.products.length > 0 || isLoading">
           <div class="flex-1 space-y-4 overflow-y-auto">
-            <template v-if="isLoading">
-              <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" />
+            <template v-if="!isLoading">
+              <DrawerProductCard v-for="product in cartStore.products" :product="product" />
             </template>
             <template v-else>
-              <DrawerProductCard v-for="product in cartStore.products" :product="product" />
+              <DrawerProductCardSkeleton v-for="(_, index) in Array(3).fill(1)" :key="index" />
             </template>
           </div>
           <CreateOrder />
@@ -41,7 +41,7 @@ onMounted(async () => await fetchData());
           v-if="cartStore.products.length <= 0 && !isLoading"
           class="h-full flex items-center justify-center"
         >
-          <DrawerEmpty v-if="true" />
+          <DrawerEmpty v-if="!cartStore.isOrdered" />
           <DrawerSuccessOrder v-else />
         </div>
       </section>

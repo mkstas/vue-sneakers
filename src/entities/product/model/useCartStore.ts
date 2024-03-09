@@ -5,6 +5,8 @@ import { IProduct } from '../types/product.types';
 
 export const useCartStore = defineStore('Cart', () => {
   const products: Ref<IProduct[]> = ref([]);
+  const isLoadingOrder: Ref<boolean> = ref(false);
+  const isOrdered: Ref<boolean> = ref(false);
 
   const show = async () => {
     products.value = (await server.get('cart')).data;
@@ -12,6 +14,7 @@ export const useCartStore = defineStore('Cart', () => {
 
   const store = async (product: IProduct) => {
     await server.post('cart', product);
+    isOrdered.value = false;
     products.value.push(product);
   };
 
@@ -21,9 +24,22 @@ export const useCartStore = defineStore('Cart', () => {
   };
 
   const order = async () => {
-    await server.post('/orders', products.value);
-    products.value = [];
+    try {
+      isLoadingOrder.value = true;
+
+      await server.post('/orders', { id: Date.now(), products: products.value });
+
+      products.value.forEach(async (product: IProduct) => {
+        await remove(product.id);
+      });
+
+      isOrdered.value = true;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoadingOrder.value = false;
+    }
   };
 
-  return { products, show, store, remove, order };
+  return { products, isLoadingOrder, isOrdered, show, store, remove, order };
 });
