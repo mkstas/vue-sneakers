@@ -24,7 +24,7 @@ const { fullPrice } = useHeader();
           class="p-2 flex items-center gap-2 text-neutral-500 hover:text-green-600"
         >
           <ShoppingCartIcon class="w-6 h-6" />
-          <span class="font-medium">{{ fullPrice }} руб.</span>
+          <span class="font-medium">{{ fullPrice.toLocaleString('ru') }} руб.</span>
         </button>
       </li>
       <li>
