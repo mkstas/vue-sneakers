@@ -8,6 +8,12 @@
 npm install
 ```
 
+### Запуск json-server
+
+```sh
+npm run db
+```
+
 ### Сборка для разработки
 
 ```sh
