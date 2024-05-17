@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "db": "json-server --watch database/db.json"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.1",
