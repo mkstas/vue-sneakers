@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { HeartIcon } from '@heroicons/vue/24/outline';
-import { IProduct, useFavouriteStore } from '@/entities/product';
+import { IGood, useFavouritesStore } from '@/entities/goods';
 
-const props = defineProps<{ product: IProduct; isFavourite: boolean }>();
+const props = defineProps<{ good: IGood; isFavourite: boolean }>();
 
 const buttonClasses = computed(() => [
   'p-2 rounded-xl border',
-  props.isFavourite ? 'bg-red-200 border-red-200' : 'border-neutral-200 group',
+  props.isFavourite
+    ? 'bg-red-200 border-red-200 outline-none focus-visible:outline-red-300'
+    : 'group border-neutral-200 outline-none focus-visible:border-neutral-800',
 ]);
 
 const iconClasses = computed(() => [
@@ -17,18 +19,14 @@ const iconClasses = computed(() => [
     : 'group-hover:fill-red-400 group-hover:stroke-red-400',
 ]);
 
-const favouriteStore = useFavouriteStore();
+const favouriteStore = useFavouritesStore();
 
 const onClick = () => {
-  try {
-    if (props.isFavourite) {
-      return favouriteStore.remove(props.product.id);
-    }
-
-    return favouriteStore.store(props.product);
-  } catch (error) {
-    console.log(error);
+  if (props.isFavourite) {
+    return favouriteStore.removeFavorite(props.good.id);
   }
+
+  return favouriteStore.storeFavourite(props.good);
 };
 </script>
 

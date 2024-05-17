@@ -1,11 +1,23 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 import { VSheet } from '@/shared/ui';
-import { useOpenDrawer } from '@/shared/api';
+import { useOpenDrawer } from '@/shared/utils';
+import { useCartStore, useCatalogStore, useFavouritesStore } from '@/entities/goods';
 import { TheHeader } from '@/widgets/the-header';
 import { TheDrawer } from '@/widgets/the-drawer';
 
+const catalogStore = useCatalogStore();
+const favouritesStore = useFavouritesStore();
+const cartStore = useCartStore();
+
 const { isOpenDrawer, openDrawer, closeDrawer } = useOpenDrawer();
+
+onMounted(async () => {
+  await catalogStore.getAll();
+  favouritesStore.getFavourites();
+  cartStore.getCart();
+});
 </script>
 
 <template>

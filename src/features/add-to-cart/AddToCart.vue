@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { CheckIcon, PlusIcon } from '@heroicons/vue/24/outline';
-import { IProduct, useCartStore } from '@/entities/product';
+import { IGood, useCartStore } from '@/entities/goods';
 
-const props = defineProps<{ product: IProduct; isAdded: boolean }>();
+const props = defineProps<{ good: IGood; isAdded: boolean }>();
 
 const buttonClasses = computed(() => [
   'p-2 rounded-xl border',
-  props.isAdded ? 'bg-green-600 border-green-600' : 'border-neutral-200 group',
+  props.isAdded
+    ? 'bg-green-600 border-green-600 outline-none focus-visible:outline-green-500'
+    : 'group border-neutral-200 outline-none focus-visible:border-neutral-800',
 ]);
 
 const cartStore = useCartStore();
 
 const onClick = () => {
   if (props.isAdded) {
-    return cartStore.remove(props.product.id);
+    return cartStore.removeFromCart(props.good.id);
   }
 
-  return cartStore.store(props.product);
+  return cartStore.storeToCart(props.good);
 };
 </script>
 

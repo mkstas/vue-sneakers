@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { CatalogPage } from '@/pages/catalog-page';
+import { FavouritesPage } from '@/pages/favourites-page';
 
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: 'Catalog',
+      name: 'catalog',
       path: '/',
-      component: () => import('@/pages/catalog-page'),
+      component: CatalogPage,
     },
     {
-      name: 'Favourite',
+      name: 'favourite',
       path: '/favorite',
-      component: () => import('@/pages/favourite-page'),
+      component: FavouritesPage,
     },
   ],
 });
