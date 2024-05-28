@@ -1,25 +1,33 @@
 <script setup lang="ts">
-import { useCatalogStore } from '@/entities/goods';
-// import { SearchField } from '@/features/search-field';
+import { useGoodsStore } from '@/entities/goods';
+import { SearchField } from '@/features/search-field';
 import { GoodCard } from '@/widgets/good-card';
 import { GoodCardSkeleton } from '@/widgets/good-card-skeleton';
+import { CatalogPageEmpty } from './catalog-page-empty';
 
-const catalogStore = useCatalogStore();
+const goodsStore = useGoodsStore();
 </script>
 
 <template>
-  <section class="space-y-4 md:space-y-6 lg:space-y-10">
-    <header class="max-sm:mt-3 flex flex-wrap justify-between gap-4 items-center">
-      <h1 class="text-2xl md:text-3xl font-bold">Все кроссовки</h1>
-      <!-- <SearchField /> -->
+  <section class="space-y-8">
+    <header class="sm:flex sm:justify-between sm:items-center sm:space-x-4 max-sm:space-y-2">
+      <h1 class="text-2xl font-bold">Каталог</h1>
+      <SearchField class="sm:max-w-80" />
     </header>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 lg:gap-10">
-      <template v-if="!catalogStore.isLoading">
-        <GoodCard v-for="good in catalogStore.goods" :key="good.id" :good="good" />
-      </template>
-      <template v-if="catalogStore.isLoading">
-        <GoodCardSkeleton v-for="(_, index) in Array(8).fill(1)" :key="index" />
-      </template>
+    <div
+      v-if="goodsStore.isLoading"
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6"
+    >
+      <GoodCardSkeleton v-for="(_, key) in 8" :key="key" />
     </div>
+    <template v-else>
+      <div
+        v-if="goodsStore.goods.length > 0"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6"
+      >
+        <GoodCard v-for="good in goodsStore.goods" :key="good.id" :good="good" />
+      </div>
+      <CatalogPageEmpty v-else />
+    </template>
   </section>
 </template>

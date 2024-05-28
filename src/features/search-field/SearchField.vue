@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { Ref, ref, watch } from 'vue';
 import debounce from 'lodash.debounce';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
-import { useSearchField } from './SearchField.data';
+import { useGoodsStore } from '@/entities/goods';
 
-const { searchValue, fetchSearchData } = useSearchField();
+const searchQuery: Ref<string> = ref('');
+
+const goodsStore = useGoodsStore();
 
 watch(
-  searchValue,
-  debounce(async () => await fetchSearchData(), 400),
+  searchQuery,
+  debounce(async () => await goodsStore.getBySearch(searchQuery.value), 400),
 );
 </script>
 
 <template>
-  <div class="relative w-full max-w-80 flex items-center border border-neutral-200 rounded-xl">
-    <MagnifyingGlassIcon class="w-5 h-5 absolute left-3 text-neutral-400" />
-    <input
-      v-model="searchValue"
-      type="text"
-      placeholder="Найти..."
-      class="pl-10 pr-4 py-2 w-full rounded-xl"
-    />
-  </div>
+  <input
+    v-model="searchQuery"
+    name="search"
+    type="text"
+    placeholder="Найти..."
+    class="w-full bg-slate-100 py-2 px-4 rounded-2xl"
+  />
 </template>

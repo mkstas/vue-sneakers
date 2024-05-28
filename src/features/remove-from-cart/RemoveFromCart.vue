@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { useCartStore } from '@/entities/goods';
+import { useCartStore } from '@/entities/cart';
 
 defineProps<{ goodId: number }>();
 
@@ -10,8 +9,8 @@ const cartStore = useCartStore();
 <template>
   <button
     @click="cartStore.removeFromCart(goodId)"
-    class="group p-2 rounded-xl border border-neutral-200 outline-none focus-visible:border-neutral-800"
+    class="p-1 text-sm text-blue-600 hover:underline"
   >
-    <XMarkIcon class="w-5 h-5 text-neutral-400 group-hover:text-red-600" />
+    Удалить
   </button>
 </template>

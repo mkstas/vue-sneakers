@@ -1,31 +1,31 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { RouterView } from 'vue-router';
-import { VSheet } from '@/shared/ui';
-import { useOpenDrawer } from '@/shared/utils';
-import { useCartStore, useCatalogStore, useFavouritesStore } from '@/entities/goods';
+import { VContainer, VSheet } from '@/shared/ui';
+import { useCartStore } from '@/entities/cart';
+import { useFavouritesStore } from '@/entities/favourites';
+import { useGoodsStore } from '@/entities/goods';
 import { TheHeader } from '@/widgets/the-header';
-import { TheDrawer } from '@/widgets/the-drawer';
+import { TheMobileNav } from '@/widgets/the-mobile-nav';
 
-const catalogStore = useCatalogStore();
-const favouritesStore = useFavouritesStore();
+const goodsStore = useGoodsStore();
 const cartStore = useCartStore();
-
-const { isOpenDrawer, openDrawer, closeDrawer } = useOpenDrawer();
+const favouritesStore = useFavouritesStore();
 
 onMounted(async () => {
-  await catalogStore.getAll();
-  favouritesStore.getFavourites();
+  await goodsStore.getAll();
   cartStore.getCart();
+  favouritesStore.getFavourites();
 });
 </script>
 
 <template>
-  <VSheet class="mx-auto my-10 w-full max-w-7xl rounded-xl divide-y divide-neutral-200">
-    <TheHeader @open-drawer="openDrawer" />
-    <main class="p-2 sm:p-6 lg:p-10">
-      <RouterView />
-      <TheDrawer v-if="isOpenDrawer" @close-drawer="closeDrawer" />
-    </main>
-  </VSheet>
+  <TheHeader />
+  <TheMobileNav class="sm:hidden" />
+  <main class="pt-2 pb-16 sm:pt-16">
+    <VContainer>
+      <VSheet class="rounded-2xl">
+        <RouterView />
+      </VSheet>
+    </VContainer>
+  </main>
 </template>

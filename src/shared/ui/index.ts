@@ -1,2 +1,2 @@
-export * from './v-overlay';
+export * from './v-container';
 export * from './v-sheet';

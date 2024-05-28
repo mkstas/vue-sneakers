@@ -1,37 +1,36 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { HeartIcon } from '@heroicons/vue/24/outline';
-import { IGood, useFavouritesStore } from '@/entities/goods';
+import { IGood } from '@/shared/interfaces';
+import { useFavouritesStore } from '@/entities/favourites';
 
 const props = defineProps<{ good: IGood; isFavourite: boolean }>();
 
+const favouritesStore = useFavouritesStore();
+
 const buttonClasses = computed(() => [
-  'p-2 rounded-xl border',
+  'group p-2 border rounded-2xl',
   props.isFavourite
-    ? 'bg-red-200 border-red-200 outline-none focus-visible:outline-red-300'
-    : 'group border-neutral-200 outline-none focus-visible:border-neutral-800',
+    ? 'border-red-200 bg-red-200 hover:bg-red-300 hover:border-red-300'
+    : 'border-slate-300',
 ]);
 
 const iconClasses = computed(() => [
-  'w-5 h-5 text-neutral-400',
+  'w-5 h-5',
   props.isFavourite
-    ? 'fill-red-400 stroke-red-400'
-    : 'group-hover:fill-red-400 group-hover:stroke-red-400',
+    ? 'fill-red-400 stroke-red-400 group-hover:fill-red-500 group-hover:stroke-red-500'
+    : 'stroke-slate-500 group-hover:fill-red-400 group-hover:stroke-red-400',
 ]);
 
-const favouriteStore = useFavouritesStore();
-
-const onClick = () => {
-  if (props.isFavourite) {
-    return favouriteStore.removeFavorite(props.good.id);
-  }
-
-  return favouriteStore.storeFavourite(props.good);
+const onClickButton = () => {
+  props.isFavourite
+    ? favouritesStore.removeFavorite(props.good.id)
+    : favouritesStore.storeFavourite(props.good);
 };
 </script>
 
 <template>
-  <button @click="onClick" :class="buttonClasses">
+  <button @click="onClickButton" :class="buttonClasses">
     <HeartIcon :class="iconClasses" />
   </button>
 </template>
