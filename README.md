@@ -4,6 +4,10 @@
 
 Веб приложение магазина для продажи кроссовок. Идея и дизайн проекта взяты с видео https://www.youtube.com/watch?v=U_-Ht_v-oAs
 
+### Серверная сторона
+
+Rest API для данного приложения: https://github.com/mkstas/nest-sneakers
+
 ### Основные идеи
 
 - Каталог
@@ -17,10 +21,6 @@
   - Удаление
 - Оформление заказ
   - Ввод номера телефона
-
-### Серверная сторона
-
-Rest API для данного приложения: https://github.com/mkstas/nest-sneakers
 
 ## Установка
 
@@ -46,16 +46,4 @@ npm run build
 
 ```sh
 npm run preview
-```
-
-### Запуск ESLint
-
-```sh
-npm run lint
-```
-
-### Форматирование файлов
-
-```sh
-npm run format
 ```
